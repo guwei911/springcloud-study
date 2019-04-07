@@ -1,0 +1,58 @@
+server:
+  port: 9898
+  tomcat:
+    max-threads: 1000
+spring:
+  application:
+    name: EOS-DAP-GOVERNOR-MASTER
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/database0?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    username: root
+    password: 000000
+    druid:
+      initial-size: 20
+      max-active: 100
+      min-idle: 20
+      stat-view-servlet:
+        enabled: true
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    default-property-inclusion: non-null
+    deserialization:
+      fail-on-unknown-properties: false
+  jpa:
+    database: MYSQL
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+        format_sql: true
+      javax.persistence.validation.mode: none
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+  freemarker:
+    template-loader-path:
+    - classpath:/freemarker/
+  servlet:
+    multipart:
+      max-request-size: 5MB
+logging:
+  pattern:
+    console: ${PID} %d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %-40.40logger{40}:%-5.5L - %msg%xEx%n
+    file:    ${PID} %d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %-40.40logger{40}:%-5.5L - %msg%xEx%n
+  file:
+    max-history: 100
+    max-size: 100MB
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+eureka:
+  client:
+    enabled: false
+  instance:
+    metadata-map:
+      eos.pid: ${PID}
